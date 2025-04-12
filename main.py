@@ -98,31 +98,96 @@ class Reviewer(Mentor):
         return  (f"Имя: {self.name}\n"
                  f"Фамилия: {self.surname}")
         
-# Новые данные для примера 
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python', 'Git']
-best_student.finished_courses += ['Введение в программирование']
+def avg_st_by_course(students, course):
+    total_grades = []
+    for student in students:
+        if course in student.grades:
+            total_grades.extend(student.grades[course])
+    return sum(total_grades) / len(total_grades) if total_grades else 0
 
-cool_lecturer = Lecturer('John', 'Doe')
-cool_lecturer.courses_attached += ['Python']
+def avg_lec_by_course(lecturers, course):
+    total_grades = []
+    for lecturer in lecturers:
+        if course in lecturer.grades:
+            total_grades.extend(lecturer.grades[course])
+    return sum(total_grades) / len(total_grades) if total_grades else 0
 
-another_lecturer = Lecturer('Jane', 'Smith')
-another_lecturer.courses_attached += ['Git']
+# Входные данные для проверки 
 
-cool_reviewer = Reviewer('Some', 'Buddy')
-cool_reviewer.courses_attached += ['Python', 'Git']
+student1 = Student('Mike', 'S.', 'male')
+student1.courses_in_progress += ['Python', 'Git']
+student1.finished_courses += ['Введение в программирование']
 
-cool_reviewer.rate_hw(best_student, 'Python', 5)
-cool_reviewer.rate_hw(best_student, 'Python', 9)
-cool_reviewer.rate_hw(best_student, 'Git', 4)
+student2 = Student('Milly', 'K.', 'female')
+student2.courses_in_progress += ['Python', 'OOP']
+student2.finished_courses += ['Основы программирования']
 
-best_student.rate_lecturer(cool_lecturer, 'Python', 8)
-best_student.rate_lecturer(cool_lecturer, 'Python', 2)
-best_student.rate_lecturer(another_lecturer, 'Git', 7)
+lecturer1 = Lecturer('John', 'L.')
+lecturer1.courses_attached += ['Python', 'Git']
 
-print(cool_reviewer)
-print()
-print(cool_lecturer)
-print()
-print(best_student)
+lecturer2 = Lecturer('Jane', 'P.')
+lecturer2.courses_attached += ['Python', 'OOP']
+
+reviewer1 = Reviewer('Hale', 'R.')
+reviewer1.courses_attached += ['Python', 'Git']
+
+reviewer2 = Reviewer('Jully', 'I.')
+reviewer2.courses_attached += ['Python', 'OOP']
+
+reviewer1.rate_hw(student1, 'Python', 6)
+reviewer1.rate_hw(student1, 'Python', 8)
+reviewer1.rate_hw(student1, 'Git', 7)
+
+reviewer2.rate_hw(student2, 'Python', 5)
+reviewer2.rate_hw(student2, 'Python', 5)
+reviewer2.rate_hw(student2, 'OOP', 10)
+
+student1.rate_lecturer(lecturer1, 'Python', 6)
+student1.rate_lecturer(lecturer1, 'Python', 7)
+student1.rate_lecturer(lecturer1, 'Git', 7)
+
+student2.rate_lecturer(lecturer2, 'Python', 6)
+student2.rate_lecturer(lecturer2, 'Python', 7)
+student2.rate_lecturer(lecturer2, 'OOP', 9)
+
+print("\nСтудент 1:")
+print(student1)
+
+print("\nСтудент 2:")
+print(student2)
+
+print("\nЛектор 1:")
+print(lecturer1)
+
+print("\nЛектор 2:")
+print(lecturer2)
+
+print("\nПроверяющий 1:")
+print(reviewer1)
+
+print("\nПроверяющий 2:")
+print(reviewer2)
+
+print("\nСравнение студентов:")
+print(f"{student1.name} {student1.surname} < {student2.name} {student2.surname}: {student1 < student2}")
+print(f"{student1.name} {student1.surname} <= {student2.name} {student2.surname}: {student1 <= student2}")
+print(f"{student1.name} {student1.surname} == {student2.name} {student2.surname}: {student1 == student2}")
+
+print("\nСравнение лекторов:")
+print(f"{lecturer1.name} {lecturer1.surname} < {lecturer2.name} {lecturer2.surname}: {lecturer1 < lecturer2}")
+print(f"{lecturer1.name} {lecturer1.surname} <= {lecturer2.name} {lecturer2.surname}: {lecturer1 <= lecturer2}")
+print(f"{lecturer1.name} {lecturer1.surname} == {lecturer2.name} {lecturer2.surname}: {lecturer1 == lecturer2}")
+
+students = [student1, student2]
+lecturers = [lecturer1, lecturer2]
+
+print("\nСредняя оценка за домашние задания по курсам:")
+print(f"{avg_st_by_course(students, 'Python')} - курс Python")
+print(f"{avg_st_by_course(students, 'Git')} - курс Git")
+print(f"{avg_st_by_course(students, 'OOP')} - курс OOP")
+
+print("\nСредняя оценка за лекции по курсам:")
+print(f"{avg_lec_by_course(lecturers, 'Python')} - курс 'Python'")
+print(f"{avg_lec_by_course(lecturers, 'Git')} - курс 'Git'")
+print(f"{avg_lec_by_course(lecturers, 'OOP')} - курс 'OOP'")
